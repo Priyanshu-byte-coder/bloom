@@ -147,6 +147,13 @@ export async function POST(
   }
 
   // STEP 3: Fetch recent messages + RAG context in parallel
+  // RAG is raced with a 5s timeout — Vercel free tier has 10s limit;
+  // on cold start, Transformers.js model download can take >10s without this guard
+  const ragWithTimeout = Promise.race([
+    retrieveContext(userMessage, user.id),
+    new Promise<[]>((resolve) => setTimeout(() => resolve([]), 5000)),
+  ])
+
   const [recentMsgsResult, ragChunks, llmSeverity] = await Promise.all([
     supabase
       .from('chat_messages')
@@ -154,7 +161,7 @@ export async function POST(
       .eq('session_id', sessionId)
       .order('created_at', { ascending: false })
       .limit(10),
-    retrieveContext(userMessage, user.id),
+    ragWithTimeout,
     crisisAssessment.severity !== 'none'
       ? classifyWithLLM(userMessage, process.env.GROQ_API_KEY!)
       : Promise.resolve('none' as const),
