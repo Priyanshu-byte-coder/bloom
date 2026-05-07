@@ -11,7 +11,9 @@
       "Bash(npx shadcn@latest add button input textarea card badge separator scroll-area toast dialog --yes)",
       "Bash(npx shadcn@latest add button input textarea card badge separator scroll-area sonner dialog --yes)",
       "Bash(npx tsc:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(grep -E \"\\\\.py$|\\\\.md$|\\\\.txt$\")",
+      "Bash(wc:*)"
     ]
   }
 }

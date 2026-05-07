@@ -155,7 +155,6 @@ export async function POST(
       .order('created_at', { ascending: false })
       .limit(10),
     retrieveContext(userMessage, user.id),
-    // Classify with LLM in parallel for medium/high (non-blocking for final response)
     crisisAssessment.severity !== 'none'
       ? classifyWithLLM(userMessage, process.env.GROQ_API_KEY!)
       : Promise.resolve('none' as const),
@@ -164,12 +163,78 @@ export async function POST(
   const recentMessages = (recentMsgsResult.data ?? []).reverse() as ChatMessage[]
   const ragContext = formatContextForPrompt(ragChunks)
 
-  // Use stricter of keyword vs LLM severity
   const severityOrder = ['none', 'low', 'medium', 'high', 'critical']
   const effectiveSeverity =
     severityOrder.indexOf(llmSeverity) > severityOrder.indexOf(crisisAssessment.severity)
       ? llmSeverity
       : crisisAssessment.severity
+
+  // STEP 3.5: Exercise injection — blocking, replaces LLM call
+  // Triggers on: explicit request OR medium/high distress
+  // Cooldown: skip if last 5 messages already had an exercise offer
+  const shouldOfferExercise =
+    shouldSuggestExercise(userMessage) ||
+    effectiveSeverity === 'medium' ||
+    effectiveSeverity === 'high'
+
+  if (shouldOfferExercise) {
+    const recentExerciseOffer = recentMessages
+      .slice(-5)
+      .some((m) => m.role === 'assistant' && m.content.includes('quick exercise'))
+
+    if (!recentExerciseOffer) {
+      // Map distress severity to distress level for exercise selection
+      const distressLevel = effectiveSeverity === 'high' ? 8 : effectiveSeverity === 'medium' ? 6 : 5
+
+      const { data: exercises } = await supabase
+        .from('mental_exercises')
+        .select('*')
+        .eq('is_active', true)
+        .lte('min_distress_level', distressLevel)
+        .gte('max_distress_level', distressLevel)
+        .limit(10)
+
+      if (exercises && exercises.length > 0) {
+        // Pick a random exercise the user hasn't seen recently
+        const recentExerciseIds = recentMessages
+          .filter((m) => m.content.includes('exercise_offer'))
+          .map((m) => m.content)
+        const fresh = exercises.filter((ex) => !recentExerciseIds.includes(ex.id))
+        const exercise = (fresh.length > 0 ? fresh : exercises)[Math.floor(Math.random() * (fresh.length > 0 ? fresh.length : exercises.length))]
+
+        const offerMessage = `I notice things feel heavy right now. Want to try a quick ${exercise.duration_minutes ?? 3}-minute exercise that might help?`
+
+        const serviceClient = createServiceClient()
+        // Store user message + offer message
+        const { data: userMsg } = await serviceClient
+          .from('chat_messages')
+          .insert({ session_id: sessionId, user_id: user.id, role: 'user', content: userMessage, embedding_status: 'pending' })
+          .select().single()
+        await serviceClient.from('chat_messages').insert({
+          session_id: sessionId,
+          user_id: user.id,
+          role: 'assistant',
+          content: offerMessage,
+          embedding_status: 'skip',
+        })
+
+        // Trigger embedding for user message
+        if (userMsg?.id) {
+          fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/embed`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'x-service-key': process.env.SUPABASE_SERVICE_ROLE_KEY! },
+            body: JSON.stringify({ text: userMessage, user_id: user.id, source_type: 'chat_message', source_id: userMsg.id, metadata: { source_date: new Date().toISOString() } }),
+          }).catch(() => {})
+        }
+
+        return NextResponse.json({
+          type: 'exercise_offer',
+          message: { role: 'assistant', content: offerMessage },
+          exercise,
+        })
+      }
+    }
+  }
 
   // STEP 4: Build prompt
   const messages = buildSystemMessages(ragContext, recentMessages, effectiveSeverity)
@@ -184,7 +249,7 @@ export async function POST(
       model: PRIMARY_MODEL,
       messages,
       stream: true,
-      max_tokens: 1024,
+      max_tokens: 200,
       temperature: 0.7,
     })
 
@@ -226,7 +291,7 @@ export async function POST(
         model: FAST_MODEL,
         messages,
         stream: true,
-        max_tokens: 1024,
+        max_tokens: 200,
         temperature: 0.7,
       })
 

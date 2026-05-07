@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import type { MentalExercise } from '@/types/database'
 
 export type Message = {
   id: string
@@ -8,6 +9,10 @@ export type Message = {
   content: string
   crisisDetected?: boolean
   isStreaming?: boolean
+  exerciseOffer?: {
+    exercise: MentalExercise
+    accepted: boolean | null  // null = pending, true = accepted, false = skipped
+  }
 }
 
 export function useChat(sessionId: string) {
@@ -16,6 +21,26 @@ export function useChat(sessionId: string) {
 
   function setInitialMessages(msgs: Message[]) {
     setMessages(msgs)
+  }
+
+  function acceptExercise(messageId: string) {
+    setMessages((prev) =>
+      prev.map((m) =>
+        m.id === messageId && m.exerciseOffer
+          ? { ...m, exerciseOffer: { ...m.exerciseOffer, accepted: true } }
+          : m
+      )
+    )
+  }
+
+  function skipExercise(messageId: string) {
+    setMessages((prev) =>
+      prev.map((m) =>
+        m.id === messageId && m.exerciseOffer
+          ? { ...m, exerciseOffer: { ...m.exerciseOffer, accepted: false } }
+          : m
+      )
+    )
   }
 
   const sendMessage = useCallback(async (content: string) => {
@@ -45,12 +70,28 @@ export function useChat(sessionId: string) {
 
       const crisisSeverity = response.headers.get('X-Crisis-Severity')
       const crisisDetected = crisisSeverity === 'critical' || crisisSeverity === 'high'
-
       const contentType = response.headers.get('Content-Type') ?? ''
 
-      // Non-streaming response (crisis/scope redirect)
+      // JSON response: crisis, scope redirect, or exercise offer
       if (contentType.includes('application/json')) {
         const data = await response.json()
+
+        if (data.type === 'exercise_offer') {
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.id === assistantId
+                ? {
+                    ...m,
+                    content: data.message.content,
+                    isStreaming: false,
+                    exerciseOffer: { exercise: data.exercise, accepted: null },
+                  }
+                : m
+            )
+          )
+          return
+        }
+
         const text = data.message?.content ?? 'Something went wrong.'
         setMessages((prev) =>
           prev.map((m) =>
@@ -98,5 +139,5 @@ export function useChat(sessionId: string) {
     }
   }, [sessionId])
 
-  return { messages, isLoading, sendMessage, setInitialMessages }
+  return { messages, isLoading, sendMessage, setInitialMessages, acceptExercise, skipExercise }
 }
