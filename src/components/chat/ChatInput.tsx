@@ -35,7 +35,7 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Share what's on your mind... (Enter to send, Shift+Enter for new line)"
+        placeholder="Share what's on your mind..."
         className="min-h-[44px] max-h-32 resize-none"
         disabled={disabled}
         maxLength={2000}

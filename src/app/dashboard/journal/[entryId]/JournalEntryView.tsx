@@ -39,7 +39,7 @@ export function JournalEntryView({ entry }: { entry: JournalEntry }) {
   }
 
   return (
-    <div className="p-8 max-w-2xl">
+    <div className="p-4 md:p-8 max-w-2xl">
       <div className="flex items-center justify-between mb-6">
         <Button variant="ghost" size="sm" onClick={() => router.back()}>← Back</Button>
         <div className="flex gap-2">

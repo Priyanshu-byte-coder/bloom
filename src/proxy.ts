@@ -27,8 +27,8 @@ export async function proxy(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname
 
-  // Protect dashboard routes
-  if (pathname.startsWith('/dashboard') && !user) {
+  // Protect dashboard + admin routes — send to login if not authenticated
+  if ((pathname.startsWith('/dashboard') || pathname.startsWith('/admin')) && !user) {
     return NextResponse.redirect(new URL('/auth/login', request.url))
   }
 

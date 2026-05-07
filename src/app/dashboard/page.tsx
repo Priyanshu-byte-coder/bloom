@@ -29,13 +29,13 @@ export default async function DashboardPage() {
   const name = profile?.display_name ?? user?.email?.split('@')[0] ?? 'there'
 
   return (
-    <div className="p-8 max-w-4xl">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Good to see you, {name} 🌸</h1>
+    <div className="p-4 md:p-8 max-w-4xl">
+      <div className="mb-6 md:mb-8">
+        <h1 className="text-xl md:text-2xl font-bold text-gray-900">Good to see you, {name} 🌸</h1>
         <p className="text-muted-foreground mt-1">How are you feeling today?</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-8">
+      <div className="grid grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-8">
         <Link href="/dashboard/chat">
           <Button className="w-full h-16 text-base bg-green-600 hover:bg-green-700 gap-2">
             💬 New Chat
@@ -48,7 +48,7 @@ export default async function DashboardPage() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
         <Card>
           <CardHeader>
             <CardTitle className="text-base">Recent Journal</CardTitle>

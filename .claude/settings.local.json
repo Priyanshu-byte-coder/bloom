@@ -13,7 +13,9 @@
       "Bash(npx tsc:*)",
       "Bash(npm run:*)",
       "Bash(grep -E \"\\\\.py$|\\\\.md$|\\\\.txt$\")",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(mkdir -p \"C:/Users/Priyanshu/OneDrive/Desktop/All_projects/bloom/src/app/admin/users/[userId]\")",
+      "Bash(mkdir -p \"C:/Users/Priyanshu/OneDrive/Desktop/All_projects/bloom/src/app/api/admin/users/[userId]\")"
     ]
   }
 }

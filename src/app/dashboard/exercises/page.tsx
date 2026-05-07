@@ -28,7 +28,7 @@ export default async function ExercisesPage() {
   }, {})
 
   return (
-    <div className="p-8 max-w-3xl">
+    <div className="p-4 md:p-8 max-w-3xl">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Exercise Library</h1>
         <p className="text-muted-foreground mt-1">

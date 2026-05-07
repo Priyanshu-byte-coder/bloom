@@ -36,8 +36,8 @@ export default async function ChatSessionPage({
     }))
 
   return (
-    <div className="flex flex-col h-screen">
-      <div className="border-b px-6 py-4 bg-white">
+    <div className="flex flex-col h-[100dvh]">
+      <div className="border-b px-4 md:px-6 py-3 md:py-4 bg-white">
         <h1 className="font-semibold text-gray-900">{session.title ?? 'Conversation'}</h1>
         {session.crisis_flag && (
           <p className="text-xs text-red-600 mt-0.5">This session contained crisis content</p>

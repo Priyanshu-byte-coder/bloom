@@ -12,7 +12,7 @@ export default async function SettingsPage() {
     .single()
 
   return (
-    <div className="p-8 max-w-xl">
+    <div className="p-4 md:p-8 max-w-xl">
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Settings</h1>
       <SettingsForm profile={profile} />
     </div>

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-teal-50 to-blue-50">
-      <nav className="flex items-center justify-between px-8 py-5">
+      <nav className="flex items-center justify-between px-4 md:px-8 py-4 md:py-5">
         <span className="text-2xl font-bold text-green-800">🌸 Bloom</span>
         <Link href="/auth/login">
           <Button variant="outline" className="border-green-200 text-green-700 hover:bg-green-50">
@@ -13,12 +13,12 @@ export default function LandingPage() {
         </Link>
       </nav>
 
-      <main className="flex flex-col items-center text-center px-6 py-20">
-        <div className="text-6xl mb-6">🌸</div>
-        <h1 className="text-5xl font-bold text-gray-900 max-w-2xl leading-tight">
+      <main className="flex flex-col items-center text-center px-4 md:px-6 py-12 md:py-20">
+        <div className="text-5xl md:text-6xl mb-5 md:mb-6">🌸</div>
+        <h1 className="text-3xl md:text-5xl font-bold text-gray-900 max-w-2xl leading-tight">
           A safe space to feel, reflect, and grow
         </h1>
-        <p className="text-xl text-gray-600 mt-6 max-w-xl">
+        <p className="text-base md:text-xl text-gray-600 mt-4 md:mt-6 max-w-xl">
           Bloom is your personal mental health companion — powered by AI, grounded in empathy.
           Journal your thoughts, chat through your feelings, and access guided exercises whenever you need them.
         </p>
@@ -29,7 +29,7 @@ export default function LandingPage() {
           </Button>
         </Link>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 max-w-3xl">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mt-12 md:mt-20 max-w-3xl w-full">
           {[
             { icon: '💬', title: 'AI Chat', desc: 'Talk through anything with a compassionate, judgment-free companion' },
             { icon: '📓', title: 'Private Journal', desc: 'Write freely — your entries power a personalized, memory-aware AI' },
