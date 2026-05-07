@@ -22,6 +22,15 @@ export default function LandingPage() {
       <div className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-teal-300/20 blur-[120px] mix-blend-multiply pointer-events-none" />
       <div className="absolute bottom-[-10%] left-[20%] w-[60%] h-[60%] rounded-full bg-cyan-300/20 blur-[120px] mix-blend-multiply pointer-events-none" />
 
+      {/* Giant Rotating Flower */}
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
+        className="absolute -bottom-[250px] -right-[250px] text-[600px] leading-none opacity-5 pointer-events-none z-0"
+      >
+        🌸
+      </motion.div>
+
       {/* Navigation */}
       <motion.nav
         initial={{ opacity: 0, y: -20 }}
@@ -66,7 +75,7 @@ export default function LandingPage() {
             Bloom is your AI-powered companion grounded in empathy. Journal your thoughts, chat through your feelings, and find your center.
           </motion.p>
 
-          <motion.div variants={fadeIn} className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+          <motion.div variants={fadeIn} className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto relative">
             <Link href="/auth/login" className="w-full sm:w-auto">
               <Button size="lg" className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-7 text-lg rounded-full shadow-xl shadow-emerald-600/20 transition-all hover:scale-105 active:scale-95 group">
                 Start your journey for free
@@ -78,6 +87,18 @@ export default function LandingPage() {
                 Explore features
               </Button>
             </Link>
+
+            {/* Extra Hero Floating Element */}
+            <motion.div 
+               animate={{ y: [0, -15, 0] }}
+               transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+               className="absolute -right-8 md:-right-32 -top-16 hidden md:flex bg-white/80 backdrop-blur-md p-3 rounded-2xl shadow-xl border border-emerald-100 z-20 items-center gap-3"
+            >
+              <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                 <Heart className="w-4 h-4 fill-current" />
+              </div>
+              <p className="text-sm font-bold text-emerald-900 pr-2">Safe Space</p>
+            </motion.div>
           </motion.div>
         </motion.div>
 
@@ -199,11 +220,15 @@ export default function LandingPage() {
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 whileHover={{ y: -5 }}
-                className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 hover:shadow-xl hover:shadow-emerald-900/5 transition-all group"
+                className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 hover:shadow-xl hover:shadow-emerald-900/5 transition-all group relative z-10"
               >
-                <div className={`w-14 h-14 rounded-2xl ${feature.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform ${feature.border} border`}>
+                <motion.div 
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
+                  className={`w-14 h-14 rounded-2xl ${feature.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform ${feature.border} border`}
+                >
                   <feature.icon className={`w-7 h-7 ${feature.color}`} />
-                </div>
+                </motion.div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
                 <p className="text-slate-600 leading-relaxed">{feature.desc}</p>
               </motion.div>
