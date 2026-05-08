@@ -110,7 +110,7 @@ export function ExercisesClient({ exercises }: { exercises: MentalExercise[] }) 
 
       {/* Bottom sheet */}
       {selected && (
-        <div className="fixed inset-0 z-50 flex flex-col justify-end" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-[60] flex flex-col justify-end" role="dialog" aria-modal="true">
           {/* Backdrop */}
           <div
             className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${sheetVisible ? 'opacity-100' : 'opacity-0'}`}

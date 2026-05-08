@@ -144,28 +144,28 @@ export default function LandingPage() {
           <motion.div
             animate={{ y: [0, -15, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -left-4 md:-left-12 top-1/4 bg-white/80 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-white/50 z-20 flex items-center gap-4"
+            className="absolute left-0 md:-left-12 top-[15%] md:top-1/4 bg-white/90 md:bg-white/80 backdrop-blur-md p-3 md:p-4 rounded-xl md:rounded-2xl shadow-xl border border-white/50 z-30 flex items-center gap-3 md:gap-4 max-w-[150px] md:max-w-none"
           >
-            <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-              <BookHeart className="w-5 h-5" />
+            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+              <BookHeart className="w-4 h-4 md:w-5 md:h-5" />
             </div>
-            <div>
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Journal Streak</p>
-              <p className="text-lg font-bold text-slate-800">12 Days</p>
+            <div className="min-w-0">
+              <p className="text-[10px] md:text-xs font-semibold text-slate-500 uppercase tracking-wider truncate">Journal Streak</p>
+              <p className="text-sm md:text-lg font-bold text-slate-800 truncate">12 Days</p>
             </div>
           </motion.div>
 
           <motion.div
             animate={{ y: [0, 20, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute -right-4 md:-right-8 bottom-1/4 bg-white/80 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-white/50 z-20 flex items-center gap-3"
+            className="absolute right-0 md:-right-8 bottom-[10%] md:bottom-1/4 bg-white/90 md:bg-white/80 backdrop-blur-md p-3 md:p-4 rounded-xl md:rounded-2xl shadow-xl border border-white/50 z-30 flex items-center gap-2 md:gap-3 max-w-[150px] md:max-w-none"
           >
-            <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
-              <Sparkles className="w-5 h-5" />
+            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 shrink-0">
+              <Sparkles className="w-4 h-4 md:w-5 md:h-5" />
             </div>
-            <div>
-              <p className="text-sm font-bold text-slate-800">Mood improved</p>
-              <p className="text-xs font-medium text-slate-500">Based on recent entries</p>
+            <div className="min-w-0">
+              <p className="text-xs md:text-sm font-bold text-slate-800 truncate">Mood improved</p>
+              <p className="text-[10px] md:text-xs font-medium text-slate-500 truncate">Based on entries</p>
             </div>
           </motion.div>
         </div>

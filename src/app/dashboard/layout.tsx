@@ -12,7 +12,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     <div className="flex h-[100dvh] bg-transparent">
       <Sidebar />
       {/* pt-16: offset mobile top header; pb-20: offset mobile bottom nav */}
-      <main className="flex-1 overflow-y-auto overflow-x-hidden pt-16 md:pt-0 pb-20 md:pb-0 relative z-10">
+      <main className="flex-1 overflow-y-auto overflow-x-hidden pt-16 md:pt-0 pb-20 md:pb-0">
         {children}
       </main>
     </div>
