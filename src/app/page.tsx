@@ -213,13 +213,9 @@ export default function LandingPage() {
                 whileHover={{ y: -5 }}
                 className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 hover:shadow-xl hover:shadow-emerald-900/5 transition-all group relative z-10"
               >
-                <motion.div 
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
-                  className={`w-14 h-14 rounded-2xl ${feature.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform ${feature.border} border`}
-                >
+                <div className={`w-14 h-14 rounded-2xl ${feature.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform ${feature.border} border`}>
                   <feature.icon className={`w-7 h-7 ${feature.color}`} />
-                </motion.div>
+                </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
                 <p className="text-slate-600 leading-relaxed">{feature.desc}</p>
               </motion.div>

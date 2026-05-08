@@ -42,3 +42,14 @@ body {
 .text-muted-foreground {
   color: var(--muted-foreground) !important;
 }
+
+/* Background flower rotations — CSS-only, compositor-threaded */
+@keyframes bloom-cw { to { transform: rotate(360deg); } }
+@keyframes bloom-ccw { to { transform: rotate(-360deg); } }
+.bloom-spin-120 { animation: bloom-cw  120s linear infinite; }
+.bloom-spin-90  { animation: bloom-ccw  90s linear infinite; }
+.bloom-spin-60  { animation: bloom-cw   60s linear infinite; }
+.bloom-spin-75  { animation: bloom-ccw  75s linear infinite; }
+
+/* Exercise sheet scroll-lock */
+body.sheet-open { overflow: hidden; }

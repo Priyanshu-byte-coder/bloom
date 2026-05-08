@@ -6,17 +6,18 @@ import type { MentalExercise, ExerciseStep } from '@/types/database'
 
 type ExercisePlayerProps = {
   exercise: MentalExercise
-  sessionId: string
+  sessionId?: string | null
+  distressBefore?: number
   onComplete: (distressAfter: number) => void
   onSkip: () => void
 }
 
-export function ExercisePlayer({ exercise, sessionId, onComplete, onSkip }: ExercisePlayerProps) {
+export function ExercisePlayer({ exercise, sessionId, distressBefore: distressBeforeProp, onComplete, onSkip }: ExercisePlayerProps) {
   const [phase, setPhase] = useState<'intro' | 'running' | 'done'>('intro')
   const [stepIndex, setStepIndex] = useState(0)
   const [secondsLeft, setSecondsLeft] = useState(0)
   const [distressAfter, setDistressAfter] = useState<number | null>(null)
-  const [distressBefore] = useState(6) // default assumption
+  const distressBefore = distressBeforeProp ?? 6
 
   const currentStep: ExerciseStep | undefined = exercise.steps[stepIndex]
 
