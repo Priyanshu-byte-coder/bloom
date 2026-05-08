@@ -9,10 +9,10 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (!user) redirect('/auth/login')
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex h-[100dvh] bg-transparent">
       <Sidebar />
-      {/* pt-14: offset mobile top header; pb-16: offset mobile bottom nav */}
-      <main className="flex-1 overflow-auto pt-14 md:pt-0 pb-16 md:pb-0">
+      {/* pt-16: offset mobile top header; pb-20: offset mobile bottom nav */}
+      <main className="flex-1 overflow-y-auto overflow-x-hidden pt-16 md:pt-0 pb-20 md:pb-0 relative z-10">
         {children}
       </main>
     </div>

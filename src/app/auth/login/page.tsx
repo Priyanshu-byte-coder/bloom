@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { motion } from 'framer-motion'
 import { ShieldAlert } from 'lucide-react'
+import { FallingFlowers } from '@/components/shared/FallingFlowers'
 
 export default function LoginPage() {
   async function signInWithGoogle() {
@@ -18,19 +19,12 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 relative overflow-hidden selection:bg-emerald-200 selection:text-emerald-900">
+    <div className="min-h-[100dvh] flex items-center justify-center bg-transparent relative overflow-hidden selection:bg-emerald-200 selection:text-emerald-900">
       {/* Background Orbs */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-emerald-300/20 blur-[120px] mix-blend-multiply pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-teal-300/20 blur-[120px] mix-blend-multiply pointer-events-none" />
 
-      {/* Floating flower */}
-      <motion.div
-        animate={{ y: [0, -20, 0], rotate: [0, 5, -5, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[10%] right-[15%] text-[100px] opacity-10 pointer-events-none"
-      >
-        🌸
-      </motion.div>
+      <FallingFlowers />
 
       <motion.div 
         initial={{ opacity: 0, y: 30 }}

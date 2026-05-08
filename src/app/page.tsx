@@ -16,20 +16,11 @@ const stagger = {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-slate-50 overflow-hidden relative selection:bg-emerald-200 selection:text-emerald-900">
+    <div className="min-h-[100dvh] bg-slate-50/50 relative selection:bg-emerald-200 selection:text-emerald-900">
       {/* Background Orbs */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-emerald-300/20 blur-[120px] mix-blend-multiply pointer-events-none" />
       <div className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-teal-300/20 blur-[120px] mix-blend-multiply pointer-events-none" />
       <div className="absolute bottom-[-10%] left-[20%] w-[60%] h-[60%] rounded-full bg-cyan-300/20 blur-[120px] mix-blend-multiply pointer-events-none" />
-
-      {/* Giant Rotating Flower */}
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
-        className="absolute -bottom-[250px] -right-[250px] text-[600px] leading-none opacity-5 pointer-events-none z-0"
-      >
-        🌸
-      </motion.div>
 
       {/* Navigation */}
       <motion.nav

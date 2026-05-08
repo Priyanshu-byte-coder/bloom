@@ -117,13 +117,20 @@ export default async function AdminUserDetailPage({
           <h2 className="font-semibold text-gray-900 mb-4">Recent Journal Entries</h2>
           <div className="space-y-3">
             {journals?.length ? journals.slice(0, 6).map((j) => (
-              <div key={j.id} className="border-b border-gray-50 pb-3 last:border-0 last:pb-0">
+              <Link
+                key={j.id}
+                href={`/admin/users/${userId}/journals/${j.id}`}
+                className="block border-b border-gray-50 pb-3 last:border-0 last:pb-0 hover:bg-gray-50 -mx-2 px-2 rounded-lg transition-colors"
+              >
                 <div className="flex items-center justify-between gap-2">
                   <p className="text-sm text-gray-800 font-medium truncate">{j.title ?? j.content.slice(0, 40)}</p>
-                  {j.mood_score && <span className="text-base flex-shrink-0">{MOOD_EMOJIS[j.mood_score]}</span>}
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                    {j.mood_score && <span className="text-base">{MOOD_EMOJIS[j.mood_score]}</span>}
+                    <span className="text-xs text-gray-400">→</span>
+                  </div>
                 </div>
                 <p className="text-xs text-gray-400 mt-0.5">{new Date(j.created_at).toLocaleDateString()}</p>
-              </div>
+              </Link>
             )) : <p className="text-sm text-gray-400">No journal entries.</p>}
           </div>
         </div>
@@ -157,7 +164,11 @@ export default async function AdminUserDetailPage({
         <h2 className="font-semibold text-gray-900 mb-4">Chat Sessions</h2>
         <div className="divide-y divide-gray-50">
           {sessions?.length ? sessions.map((s) => (
-            <div key={s.id} className="flex items-center justify-between py-2.5">
+            <Link
+              key={s.id}
+              href={`/admin/users/${userId}/sessions/${s.id}`}
+              className="flex items-center justify-between py-2.5 hover:bg-gray-50 -mx-2 px-2 rounded-lg transition-colors"
+            >
               <div className="flex items-center gap-2">
                 <span>{s.session_type === 'crisis' ? '🆘' : '💬'}</span>
                 <p className="text-sm text-gray-800">{s.title ?? 'Conversation'}</p>
@@ -165,8 +176,11 @@ export default async function AdminUserDetailPage({
                   <span className="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded">crisis</span>
                 )}
               </div>
-              <p className="text-xs text-gray-400">{new Date(s.created_at).toLocaleDateString()}</p>
-            </div>
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-gray-400">{new Date(s.created_at).toLocaleDateString()}</p>
+                <span className="text-xs text-gray-400">→</span>
+              </div>
+            </Link>
           )) : <p className="text-sm text-gray-400">No sessions.</p>}
         </div>
       </div>
